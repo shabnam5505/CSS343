@@ -7,6 +7,7 @@
 using namespace std;
 
 
+//put some notes in
 int main()
 {
 	int waitVar;
