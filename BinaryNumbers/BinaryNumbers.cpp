@@ -7,7 +7,7 @@
 using namespace std;
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
 	int waitVar;
 	//Binary b(-987);
