@@ -52,7 +52,7 @@ public:
 	//+= overload returns a reference to a binary object 
 	Binary& operator+=(Binary& obj);
 	//+ overload returns a binary object 
-	Binary& operator+(Binary& list);
+	Binary operator+(const Binary& list);
 	//+ overload that takes an binary + int and returns a binary
 	Binary operator+(int obj);
 	//-= overload returns a reference binary object 
@@ -82,7 +82,7 @@ private:
 
 	//Precondition: pass in an array
 	//Postcondition: returns the value of the binary number passed in
-	int convertToInt(bool *arr);
+	int convertToInt(bool *arr) const;
 
 	//stores the value of either positive or negetive for the binary number
 	bool sign;

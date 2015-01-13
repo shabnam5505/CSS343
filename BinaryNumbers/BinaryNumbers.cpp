@@ -33,7 +33,7 @@ int main()
 	cout << a << endl;
 
 	cout << "a -= b" << endl;
-	x = a - b;
+	x = a -= b;
 	cout << x << endl;
 
 	

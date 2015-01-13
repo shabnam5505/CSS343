@@ -89,7 +89,7 @@ void Binary :: convertToBinary(int num)
 
 //Precondition: pass in an array
 //Postcondition: returns the value of the binary number passed in
-int Binary:: convertToInt(bool *arr)
+int Binary:: convertToInt(bool *arr) const
 {
 	int returnVal = 0;
 	int bitValue = 1;
@@ -185,13 +185,19 @@ void Binary::toggleBit(int bitPosition)
 
 //copy constructor
 Binary::Binary(const Binary &obj)
-{
+{ 
+	//if (this != NULL)
+	//	delete binary;
 	//Binary temp = obj;
-	sign = false;
+	sign = obj.sign;
 	count = 1;
 	this->count = obj.count;
-	binary = new bool[count];
-	binary = obj.binary;
+	
+		//delete binary;
+	this->binary = new bool[count];
+	
+	
+	convertToBinary(count);
 	//convertToBinary(temp.convertToInt(temp.binary));
 
 	/**binary = *obj.binary;*/
@@ -202,17 +208,24 @@ Binary::Binary(const Binary &obj)
 Binary& Binary:: operator=(const Binary &source)
 {
 
-	if (&source == NULL)
+	if (&source == this)
 		return *this;
 
 	if (this != &source)
 	{
-
+		
 		this->count = source.count;
 		this->sign = source.sign;
-		binary = new bool[count];
-		this->binary = source.binary;
-	
+		bool *todelete = binary;
+		delete binary;
+		this->binary = new bool[count];
+
+		for (int i = 0; i < count; i++)
+		{
+			this->binary[count - 1 - i] = getBit(count - i);
+		}
+		
+		
 	}
 	return *this;
 	
@@ -230,7 +243,8 @@ Binary& Binary:: operator=(int source)
 		//binary = NULL;
 
 		this->count = getSize(source);
-		this->binary = new bool[count];
+		if (this != NULL)
+			this->binary = new bool[count];
 		convertToBinary(source);
 
 		//remember to set array in backwards order
@@ -261,10 +275,17 @@ Binary& Binary:: operator+=(Binary& obj)
 }
 
 //+ overload returns a binary object 
-Binary& Binary:: operator+(Binary& list)
+Binary Binary:: operator+(const Binary& list)
 {
 
-	return *this += list;
+
+	int firstVal, secondVal;
+	firstVal = convertToInt(binary);
+	secondVal = list.convertToInt(list.binary);
+	
+	Binary b(firstVal + secondVal);
+
+	return b;
 }
 
 //-= overload returns a reference binary object 
@@ -273,10 +294,11 @@ Binary& Binary:: operator-=(Binary& obj)
 	int firstVal, secondVal;
 	firstVal = convertToInt(binary);
 	secondVal = obj.convertToInt(obj.binary);
+	secondVal -= firstVal;
 	
 	//count needs to be reset when changing *this
-	count = getSize(firstVal - secondVal);
-	convertToBinary(firstVal - secondVal);
+	count = getSize(secondVal);
+	convertToBinary(secondVal);
 
 	return *this;
 }
