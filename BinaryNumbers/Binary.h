@@ -39,6 +39,7 @@ public:
 
 	//copy constructor
 	//Binary(Binary &obj);
+	//adding new line
 
 	//copy constructor
 	Binary(const Binary &obj);
