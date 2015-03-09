@@ -1,0 +1,31 @@
+P, 123, D, Bryan Singer, The Usual Suspects, 1999
+P, 505, D, Bryan Singer, The Usual Suspects, 1999
+P, 505, D, Bryan Singer, The Usual Suspects, 1999
+P, 505, D, Bryan Singer, The Usual Suspects, 1999
+P, 505, D, Bryan Singer, The Usual Suspects, 1999
+P, 505, D, Incorrect Disk, The Usual Suspects, 1999
+T, 456, C, Sir Neville Marriner, Mozart: Requiem, 1991, Wolfgang Amadeus Mozart
+H, 123
+I
+X, 999, R, Iron Butterfly, In-A-Gadda-Da-Vida, 1968
+P, 000, H, Anonymous, Some Title, 3000
+A
+P, 305, R, Green Field, Happy Days, 2005
+P, 304, R, Green Field, Happy Days, 2005
+P, 305, R, Green Field, Happy Days, 2005
+P, 001, R, Green Field, Happy Days, 2005
+P, 305, R, Green Field, Happy Days, 2005
+T, 505, R, Creative Jumper, Sima, 2015
+T, 505, D, Benny Long, Its ok, 2009
+T, 505, D, Kassy Brian, Orange, 2008
+T, 505, D, Lemo Vance, Practical, 2004
+T, 505, R, Harper, Wow That's it, 2009
+T, 505, R, Harper2, Wow That's it, 2009
+T, 505, R, Harper, Wow That's it2, 2009
+T, 505, R, Harper2, Wow That's it, 2009
+T, 505, R, Harper, Wow That's it, 2010
+T, 505, R, Harper, Wow That's it, 2009
+T, 001, C, A, A, 1, A
+A
+I
+
