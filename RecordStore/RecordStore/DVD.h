@@ -7,6 +7,11 @@
 class DVD : public Disk
 {
 public:
+	//output operator overloaded to print out a classical cd object
+	//Preconditions: a valid classicalCD object is passed in
+	//Postconditions: prints out a classicalCD object
+	friend ostream& operator<<(ostream &os, DVD &dvd);
+
 	//default constructor creates and instance of the object
 	//no preconditions
 	//Postconditions: creates a DVD object
@@ -27,6 +32,11 @@ public:
 	//Postconditons: will create a DVD object with all data members intialized
 	DVD(string title, int year, string director);
 
+	//Create creates an instance of a DVD and passes back a pointer
+	//Preconditions: input is formatted correctly
+	//Postconditions: A disk pointer will be returned of a new DVD object
+	virtual Disk* Create(string input);
+
 
 	//purchase method is used to create a new DVD object and return a pointer to the Driver class
 	//Preconditions: file is formatted properly
@@ -41,12 +51,12 @@ public:
 	//setDirectorName allows other classes to set the director in the object
 	//Preconditions: string must be passed in
 	//Postconditions: sets the director of the DVD object
-	void setDirectorName(string director);
+	virtual void setDirectorName(string director);
 
 	//getDirectorName allows other classes to retrieve the director
 	//Preconditions: none
 	//Postconditions: will return a string that is the director of the DVD object
-	string getDirectorName() const;
+	virtual string getDirectorName() const;
 
 	//Overloaded equals operator is used for comparison in the BSTree class
 	//Preconditions: a DVD object must be passed in
@@ -71,17 +81,28 @@ public:
 	//display is a inherited method that outputs a DVD
 	//Preconditions: A DVD must be passed in 
 	//Postconditions: will display to console details of a DVD
-	virtual void display(TreeData &obj);
+	virtual void display(TreeData &obj, int count);
 
-	//getQuanity gets the quanity of a given item
-	//no precondtions
-	//Postcondtion: this method will return an integer representing the number of items of a given object
-	virtual int getQuanity() const;
+	//getTitle returns the title of the DVD
+	//Preconditions: object has been created
+	//Postconditions: returns a string representing the title
+	virtual string getTitle() const;
 
-	//setQuanity allows other classes to set the value of quanity
-	//Precondition: must pass in an int
-	//Postcondition: this method will set the quanity of the item
-	virtual void setQuanity(int data);
+	//setTitle sets the title of a DVD 
+	//Preconditions: a string is passed in
+	//Postconditions: updates the value of the title
+	virtual void setTitle(string t);
+
+	//get returns the year of issue of the DVD
+	//Preconditions: the object has been intialized
+	//Postconditions: returns an int representing year of issue
+	virtual int getYear() const;
+
+	//setYear sets the year of issue of the DVD
+	//Preconditons: passing in a valid int, object exists
+	//Postconditions: sets the year of issue of the DVD
+	virtual void setYear(int year);
+
 protected:
 
 	//stores a director

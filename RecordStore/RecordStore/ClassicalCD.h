@@ -3,9 +3,15 @@
 //This class handles its own creation of objects and passes a pointer back to the inventory class to store its data
 #pragma once
 #include "RockCD.h"
+
 class ClassicalCD : public RockCD
 {
 public:
+	//output operator overloaded to print out a classical cd object
+	//Preconditions: a valid classicalCD object is passed in
+	//Postconditions: prints out a classicalCD object
+	friend ostream& operator<<(ostream &os, ClassicalCD &classical);
+
 	//default constructor creates and instance of the object
 	//no preconditions
 	//Postconditions: creates a ClassicalCD object
@@ -15,6 +21,11 @@ public:
 	//Preconditions: input must be formatted correctly
 	//Postconditions: creates a new ClassicalCD setting all the data members with appropriate data
 	ClassicalCD(string input);
+
+	//constructor that takes in all 4 data members
+	//Preconditons: data members are correct
+	//Postconditions: creates a new instance of objects with given data members
+	ClassicalCD(string title, string artistName, string composer, int year);
 
 	//virtual destructor allows for cleanup of objects
 	//Preconditions: none
@@ -29,17 +40,59 @@ public:
 	//setComposer allows for the commposer to be set by other classes
 	//Preconditions: must pass in a string
 	//Postconditions: will set the composer accordlingly
-	void setComposer(string composer);
+	virtual void setComposer(string composer);
 
-	//purchase is an overridden method that creates new ClassicalCDs
+	//getComposer gets the value of the composer stored in the object
+	//Preconditions: none
+	//Postconditions: returns a string of the composer in the ClassicalCD
+	virtual string getComposer() const;
+
+	//setArtistName allows for the artistName to be set by other classes
+	//Preconditions: string is passed in
+	//Postconditions: will set the value accordingly
+	virtual void setArtistName(string artist);
+
+	//getArtistName allows for other classes to be able to retrieve this value
+	//Preconditions: none
+	//Postconditions: will return a string of the value in artistName
+	virtual string getArtistName() const;
+
+	//getTitle returns the title of the Classical CD
+	//Preconditions: object has been created
+	//Postconditions: returns a string representing the title
+	virtual string getTitle() const;
+
+	//setTitle sets the title of a Classical CD
+	//Preconditions: a string is passed in
+	//Postconditions: updates the value of the title
+	virtual void setTitle(string t);
+
+	//get returns the year of issue of the Classical CD
+	//Preconditions: the object has been intialized
+	//Postconditions: returns an int representing year of issue
+	virtual int getYear() const;
+
+	//setYear sets the year of issue of the Classical CD
+	//Preconditons: passing in a valid int, object exists
+	//Postconditions: sets the year of issue of the Classical CD
+	virtual void setYear(int year);
+
+	//Create creates an instance of a ClassicalCD and passes back a pointer
+	//Preconditions: input is formatted correctly
+	//Postconditions: A disk pointer will be returned of a new ClassicalCD object
+	virtual Disk* Create(string input);
+
+
+	//purchase at this time just calls create so the object can be searched for in inventory
+	//options to expand this method are available
 	//Preconditions: input from file must be formatted correctly
 	//Postconditions: returns a Disk pointer to inventory after object is created
 	virtual Disk* purchase(string input);
 
-	//tradeIn is an overriden method that will control the tradeIn of an object 
-	//(should it involve something other than remove)
+	//tradeIn is an overriden method that just calls create at this time so object can
+	//be added to the inventory, options to expand are available
 	//Preconditions: must pass in valid input
-	//Postconditions: to be defined 
+	//Postconditions: Returns a disk pointer after object is created
 	virtual Disk* tradeIn(string input);
 
 	//Overloaded equals operator is used for comparison in the BSTree class
@@ -65,17 +118,8 @@ public:
 	//display is a inherited method that outputs a RockCD
 	//Preconditions: A RockCD must be passed in 
 	//Postconditions: will display to console details of a RockCD
-	virtual void display(TreeData &obj);
+	virtual void display(TreeData &obj, int count);
 
-	//getQuanity gets the quanity of a given item
-	//no precondtions
-	//Postcondtion: this method will return an integer representing the number of items of a given object
-	virtual int getQuanity() const;
-
-	//setQuanity allows other classes to set the value of quanity
-	//Precondition: must pass in an int
-	//Postcondition: this method will set the quanity of the item
-	virtual void setQuanity(int data);
 protected:
 
 	//stores the composer data

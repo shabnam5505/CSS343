@@ -17,6 +17,9 @@ public:
 	//Postconditions: will call the driver class function that performs this operation
 	virtual void executeTransaction(string input, Driver *);
 
+	//print allows for a transaction object to be printed
+	//Preconditions: none
+	//Postconditions: at this time asks to print from driver class, perhaps use if required to track all transaction made to Record Store??
 	virtual void print() const;
 
 	//virtual destructor is used to clean up TransHistoryAll objects

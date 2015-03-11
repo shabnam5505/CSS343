@@ -1,17 +1,25 @@
-//Writen by: Shabnam Basmani, Date: 1/15/15
-//This program purpose is to count the frequency of each character in a given text file
+//Writen by: Shabnam Basmani, Date: 2/20/15
+//This BST serves as a container for TreeData objects 
+//Objects will not be inserted if there are duplicates; instead a quanity counter in TreeData will be incremented 
+//Objects will only be deleted if quanity in TreeData is set to 1
 //Additional functionally is given in the .h file
 //This file contains the functionally of the binary search tree which stores a pointer to the character data
 #include "BSTree.h"
 #include "TreeData.h"
 
 
+//Default constructor
+//No preconditions
+//Postconditions: creates a new instance of a BSTree object
 BSTree::BSTree(void)
 {
 	root = NULL;
 }
 
-
+//This is a helper method for serveral other methods to check if the object exists so the counter can be updated if the value already exists
+//Precondition: takes a Node pointer and const ref TreeData obj
+//Postcondition: Finds if an object already exists on the Tree and returns a pointer to that Node
+//this is method is used for determining if the quanity of an object needs to be incremented or decremented
 BSTree::Node* BSTree::findDups(Node *ptr, const TreeData &t)
 {
 	if (ptr == NULL) 
@@ -30,7 +38,19 @@ BSTree::Node* BSTree::findDups(Node *ptr, const TreeData &t)
 	}
 }
 
+//updateQuanity is used when inventory items are loaded orginally, this allows for inventory to specifify 
+//how many items are being initialized
+//Preconditions: An pointer to the object as already been inserted in the tree
+//Postconditions: Updates the counter variable on the node
+void BSTree :: updateQuanity(TreeData *obj, int numOfItems)
+{
+	Node *updateNode = findDups(root, *obj);
+	updateNode->counter = numOfItems;
+}
 
+//Insert method allows you to insert a TreeData object into the BST
+//Precondition: must pass in a pointer to TreeData obj and assumes the tree is sorted in non-decending order
+//Postcondtion: inserts an object into the binary search tree or if object already exists increments quanity on TreeData and returns true if data is inserted
 bool BSTree::insert(TreeData *obj)
 {
 	if (root == NULL)
@@ -44,13 +64,17 @@ bool BSTree::insert(TreeData *obj)
 	return insertHelper(root, obj);
 }
 
-
+//Helper method for the insert method needed to pass in the root Node
+//Precondition: takes a Node pointer and TreeData pointer and assumes the tree is sorted in non-decending order
+//Postcondition: Recusively calls itself until it finds a place in the tree to insert the node and returns if inserted
 bool BSTree :: insertHelper(Node *&ptr, TreeData *obj)
 {
 	Node *t = findDups(ptr, *obj);
 	if (t != NULL)
 	{
-		t->data->setQuanity(t->data->getQuanity() + 1);
+		t->counter ++;
+		delete obj;
+		obj = NULL;
 		return true;
 	}
 
@@ -86,14 +110,15 @@ bool BSTree :: deleteNode(Node *& root,TreeData &item)
 	if (root == NULL) return false;
 	if (*root->data == item)
 	{
-		if (root->data->getQuanity() == 1)
+		//if (root->data->getQuanity() == 1)
+		if(root->counter == 1)
 		{
 			deleteRoot(root);
 			return true;
 		}
 		else
 		{
-			root->data->setQuanity(root->data->getQuanity() - 1);
+			root->counter --;
 			return true;
 		}
 	}
@@ -121,7 +146,8 @@ void BSTree::deleteRoot(Node *&todelete)
 	{
 		Node *temp = todelete;
 		todelete = todelete->right;
-		delete todelete->data;
+		delete temp->data;
+		temp->data = NULL;
 		delete temp;
 		temp = NULL;
 	}
@@ -130,6 +156,7 @@ void BSTree::deleteRoot(Node *&todelete)
 		Node *temp = todelete;
 		todelete = todelete->left;
 		delete temp->data;
+		temp->data = NULL;
 		delete temp;
 		temp = NULL;
 	}
@@ -162,13 +189,17 @@ TreeData* BSTree::findAndDeleteSmallest(Node *&todelete)
 
 
 
-
+//Retrive method returns the address of the TreeData obj stored in the BST if it exists
+//Precondtion: must pass at const ref to a TreeData obj
+//Postcondition: returns a pointer to the object on the BST or NULL if no object exists
 const TreeData* BSTree :: retrieve(const TreeData &obj)
 {
 	return retriveHelper(root, obj);
 }
 
-
+//Helper method for the retrive method needed to pass in the root Node
+//Precondition: takes a Node pointer and const ref TreeData obj
+//Postcondition: Recusively calls itself until if finds the given obj and returns a pointer to the data
 const TreeData* BSTree :: retriveHelper(Node *ptr, const TreeData &obj)
 {
 	//if (ptr == NULL) return NULL;
@@ -195,29 +226,6 @@ const TreeData* BSTree :: retriveHelper(Node *ptr, const TreeData &obj)
 
 
 
-//TreeData* BSTree :: Search(const TreeData &item)
-//{
-//	return SearchTree(item, root);
-//}
-//
-//
-//TreeData* BSTree :: SearchTree(const TreeData &item, Node* thisNode)
-//{
-//	if (thisNode == NULL) return NULL;
-//	else if (item == *thisNode->data)
-//	{
-//		return (thisNode->data);
-//	}
-//	else if (item < *thisNode->data)
-//	{
-//		return SearchTree(item, thisNode->left);
-//	}
-//	else
-//	{
-//		return SearchTree(item, thisNode->right);
-//	}
-//
-
 //}//Make Empty deletes all elements from the BST
 //No preconditions
 //Postcondition: removes all nodes and their data from the BST
@@ -237,6 +245,8 @@ void BSTree::deleteTree(Node *&ptr)
 		if (ptr->right != NULL) deleteTree(ptr->right); // Clear right sub-tree
 		delete ptr->data;
 		ptr->data = NULL; //Destory TreeData obj
+		//ptr->left = NULL;
+		//ptr->right = NULL;
 		delete ptr;    // Destroy this 
 		ptr = NULL;
 	}
@@ -262,7 +272,7 @@ BSTree::Node* BSTree::outputHelper(Node *root)
 	{
 		//ostream &os(*root->left->data);
 		outputHelper(root->left);
-		root->data->display(*root->data);
+		root->data->display(*root->data, root->counter);
 		outputHelper(root->right);
 	}
 	else return NULL;
@@ -273,37 +283,15 @@ BSTree::Node* BSTree::outputHelper(Node *root)
 //Post Condition: The << operator will recognize a BSTree object
 ostream& operator<<(ostream &os, BSTree &obj)
 {
-	obj.Output(os);
+	obj.Output();
 	return os;
 	
 }
 
 
-//Helper method for the overloaded output operator 
-//Precondition: must pass in an ostream
-//Postcondition: Calls the outputHelper method passing in the root node
-ostream& BSTree :: Output(ostream &output)
-{
-	return output;
-}
-
-//Helper method for the output method 
-//Precondition: must pass in a ostream and node pointer
-//Postcondition: Sets the ostream to take in the data of each Node on the tree
-ostream& BSTree::outputHelper(ostream &output, Node *root) 
-{
-	
-	if (root != NULL) 
-	{
-		outputHelper(output, root->left);
-		 root->data->display(*root->data);
-		outputHelper(output, root->right);
-	}
-	return output;
-}
-
-
-
+//isEmpty returns if the tree is empty or not
+//Preconditions: none
+//Postconditions: will return a bool depending on the whether or not the tree is empty
 bool BSTree :: IsEmpty()
 {
 	if(root == NULL)
@@ -312,9 +300,11 @@ bool BSTree :: IsEmpty()
 }
 
 
-
+//This is the default destructor which calls make empty to clean up the tree
+//Preconditons: tree has been intialized
+//Postconditions: calls deletetree method to clean up the tree's memory
 BSTree::~BSTree(void)
 {
-	//deleteTree(root);
+	deleteTree(root);
 
 }

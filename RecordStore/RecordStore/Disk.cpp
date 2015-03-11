@@ -1,57 +1,23 @@
+//Shabnam Basmani
+//This is an abstract class that is used for all Disk items to inherit from. It is possible to add an additional Item class if needed to handle the record
+//store being able to sell items not related to Disks. All disks should have a title and year of issue. This class inherits from treedata to be used in the BST. 
 #include "Disk.h"
 
 
+//Default constructor has no preconditions
+//Postconditions: will create a new Disk object 
 Disk::Disk(void)
 {
-	quanity = 1;
-}
-Disk* Disk :: Create(string t)
-{
-	cout << "this is the disk class." << endl;
-	return this;
+	title = " ";
+	yearOfIssue = NULL;
+
 }
 
-//bool Disk ::operator==(const Disk& obj) const
-//{
-//	if(title == obj.title && yearOfIssue == obj.yearOfIssue)
-//		return true;
-//	else
-//		return false;
-//}
-////overloaded not equals
-//bool Disk :: operator!=(const Disk& obj) const
-//{
-//	if(title != obj.title && yearOfIssue != obj.yearOfIssue)
-//		return true;
-//	else
-//		return false;
-//}
-//
-////overloaded less than 
-//bool Disk :: operator<(const Disk& obj) const
-//{ 
-//	if(title < obj.title)
-//		return true;
-//	else return false;
-//}
-////overloaded greater than
-//bool Disk :: operator>(const Disk& obj) const
-//{
-//	if(title > obj.title)
-//		return true;
-//	else return false;
-//}
 
-string Disk:: trim(string const& str)
-{
-    if(str.empty())
-        return str;
 
-    std::size_t first = str.find_first_not_of(' ');
-    std::size_t last  = str.find_last_not_of(' ');
-    return str.substr(first, last-first+1);
-}
-
+//virtual destructor used to clean up possible Disk objects
+//Preconditions: none
+//Postconditions: cleans up any Disk objects
 Disk::~Disk(void)
 {
 }

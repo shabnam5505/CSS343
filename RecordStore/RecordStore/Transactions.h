@@ -8,7 +8,9 @@ class Driver;
 class Transactions
 {
 public:
-	//default constructor is all that is needed. This object should never been created
+	//default constructor creates instance of object/ should never be called
+	//no preconditions
+	//creates a transaction object
 	Transactions(void);
 
 	//executeTransactions is a pure virtual method that will be used by derived classes
@@ -16,6 +18,9 @@ public:
 	//no postconditions
 	virtual void executeTransaction(string input, Driver *) = 0;
 
+	//print is a virtual method used in it's derived classes to print out transactions
+	//Preconditions: none
+	//Postconditions: print will not be called
 	virtual void print() const = 0;
 
 	//virtual destructor is used to clean up any Transaction objects

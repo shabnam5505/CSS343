@@ -27,7 +27,7 @@ public:
 	Disk(string title, int year);
 
 	//Creates and object. Most likely will not be needed
-	virtual Disk* Create(string input);
+	virtual Disk* Create(string input) = 0;
 
 	//overloaded equals is a pure virtual method used in the derived classes
 	//Preconditions: none
@@ -65,20 +65,34 @@ public:
 	//display is a pure virtual method used in the derived classes
 	//Preconditions: none
 	//Postconditons: none
-	virtual void display(TreeData &obj) = 0;
+	virtual void display(TreeData &obj, int count) = 0;
 
 	//virtual destructor used to clean up possible Disk objects
+	//Preconditions: none
+	//Postconditions: cleans up any Disk objects
 	virtual ~Disk(void);
 
-	//getQuanity gets the quanity of a given item
-	//no precondtions
-	//Postcondtion: this method will return an integer representing the number of items of a given object
-	virtual int getQuanity() const = 0;
 
-	//setQuanity allows other classes to set the value of quanity
-	//Precondition: must pass in an int
-	//Postcondition: this method will set the quanity of the item
-	virtual void setQuanity(int data) = 0;
+	//getTitle gets the title of the correct disk object
+	//Preconditions: none
+	//Postconditons: none
+	virtual string getTitle() const = 0;
+
+	//setTitle set the title of the correct disk object in dervied class
+	//Preconditions: none
+	//Postconditions: this never gets called
+	virtual void setTitle(string t) = 0;
+
+	//getYear exists to allow dervied classes to get the year of Issue
+	//Preconditions: none
+	//Postconditions: none
+	virtual int getYear() const = 0;
+
+	//setYear exists to allow dervived classes to set the year of issue
+	//Preconditions: none
+	//Postcondtions: none
+	virtual void setYear(int year) = 0;
+
 
 protected:
 
@@ -90,10 +104,6 @@ protected:
 	//all derived classes can use this member
 	int yearOfIssue;
 
-	//trim trims a string of whitespace (I don't think this function is necessary)
-	//Preconditions: a string must be passed in
-	//Postconditions: will return a string without whitespace
-	string trim(string const& str);
 
 	
 	

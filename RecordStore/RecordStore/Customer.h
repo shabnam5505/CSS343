@@ -19,7 +19,7 @@ public:
 	//overloaded constructor creates an instance of a customer with parameters
 	//Preconditons: Must pass in valid data types
 	//Postconditions: creates a new customer object intialzing custId and custName
-	Customer(int custId, string custName);
+	Customer(int custId, string last, string first);
 
 	//virtual destructor used to clean up customer objects
 	//no preconditions
@@ -51,35 +51,27 @@ public:
 	//Postconditions: method will print to console one customer with Transaction History (used directly by Driver class)
 	void displayHistory(int id);
 
-	//addCustomerTransaction allows Driver class to add a transaction to a customer
-	//Preconditions: input is properly formatted
-	//Postconditions: will add a transaction to the History vector
-	void addCustomerTransaction(string input);
-
 	//display is a inherited method that outputs a customer
 	//Preconditions: A customer must be passed in 
 	//Postconditions: will display to console a customer's data
-	virtual void display(TreeData &obj);
+	virtual void display(TreeData &obj, int count);
 
+	//addToHistory adds a new transaction to the customer's history
+	//Preconditions: customer is created and valid transaction object is passed in
+	//Postconditons: a new transaction object is added to the history vector
 	void addToHistory(Transactions *);
-
-	//getQuanity gets the quanity of a given item
-	//no precondtions
-	//Postcondtion: this method will return an integer representing the number of items of a given object
-	virtual int getQuanity() const;
-
-	//setQuanity allows other classes to set the value of quanity
-	//Precondition: must pass in an int
-	//Postcondition: this method will set the quanity of the item
-	virtual void setQuanity(int data);
 	
 
 private:
+	
 	//this stores the customer id
 	int custId;
 
-	//this stores the customer name (first and last)
-	string custName;
+	//this stores the customer's first name
+	string fName;
+
+	//this stores the customer's last name
+	string lName;
 
 	//this vector contains the History of transaction of each customer
 	vector <Transactions*> History;

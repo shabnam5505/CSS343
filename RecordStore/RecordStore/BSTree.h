@@ -19,11 +19,14 @@ class BSTree
 	  {
 		  TreeData* data;           // pointer to actual data stored
 		  Node* left;               // pointer to left child Node, left subtree
-		  Node* right;    
+		  Node* right; 
+		  int counter;
 		  Node()
 		  {
+			  counter = 1;
 			  left = NULL;
 			  right = NULL;
+			  data = NULL;
 		  }
 	  };
 	  
@@ -34,14 +37,26 @@ class BSTree
 
 public:
 	//Default constructor
+	//No preconditions
+	//Postconditions: creates a new instance of a BSTree object
 	BSTree(void);
-	//Constructor that takes in a TreeData* obj. Will set root equal to null and insert obj into BST.
-	BSTree(TreeData* t);
+
+
+	////Constructor that takes in a TreeData* obj. Will set root equal to null and insert obj into BST.
+	////Preconditions: must pass a treedata object
+	////Postconditions: inserts a treedata object into the tree after creating a new instance
+	//BSTree(TreeData* t);
 
 	//Insert method allows you to insert a TreeData object into the BST
 	//Precondition: must pass in a pointer to TreeData obj and assumes the tree is sorted in non-decending order
 	//Postcondtion: inserts an object into the binary search tree or if object already exists increments quanity on TreeData and returns true if data is inserted
 	bool insert(TreeData *);
+
+	//updateQuanity is used when inventory items are loaded orginally, this allows for inventory to specifify 
+	//how many items are being initialized
+	//Preconditions: An pointer to the object as already been inserted in the tree
+	//Postconditions: Updates the counter variable on the node
+	void updateQuanity(TreeData *, int numOfItems); 
 
 
 	//Make Empty deletes all elements from the BST
@@ -65,28 +80,30 @@ public:
 	//Postcondition: removes a given obj from the BST or deincrements the quanity and returns true if obj is found and removed
 	bool remove(TreeData &);
 
-	//Overloaded copy constructor is used to create a deep copy of all objects in the BST for a newly created object
-	//no preconditions will be used when necessary automatically
-	//Postcondition: After copy is complete you should have two BST's that are identical without reusing pointers
-	BSTree(const BSTree &obj);
+	////Overloaded copy constructor is used to create a deep copy of all objects in the BST for a newly created object
+	////no preconditions will be used when necessary automatically
+	////Postcondition: After copy is complete you should have two BST's that are identical without reusing pointers
+	//BSTree(const BSTree &obj);
 
-	//Overloaded assignment operator will assign the this object the values and data of the BST being passed in. Should create a deep copy.
-	//no preconditions will be used when necessary automatically
-	//Postcondition: After assignment is complete you should two BST's that are indentical without reusing pointers
-	BSTree& operator=(const BSTree &source);
+	////Overloaded assignment operator will assign the this object the values and data of the BST being passed in. Should create a deep copy.
+	////no preconditions will be used when necessary automatically
+	////Postcondition: After assignment is complete you should two BST's that are indentical without reusing pointers
+	//BSTree& operator=(const BSTree &source);
 
 	
-	//Overloaded equals operator checks to see if two BST are equal to one another by comparing all of the data in the TreeData and BST
-	//no preconditions
-	//will return true if BST's are the same and false if not
-	bool operator==(const BSTree& obj) const;
+	////Overloaded equals operator checks to see if two BST are equal to one another by comparing all of the data in the TreeData and BST
+	////no preconditions
+	////will return true if BST's are the same and false if not
+	//bool operator==(const BSTree& obj) const;
 
-	//Overloaded not equals operator checks to see if two BST are not equal to one another by comparing all of the data in the TreeData and BST
-	//no preconditions
-	//will return false if BST's are the same and true if not
-	bool operator!=(const BSTree& obj) const;
+	//////Overloaded not equals operator checks to see if two BST are not equal to one another by comparing all of the data in the TreeData and BST
+	//////no preconditions
+	//////will return false if BST's are the same and true if not
+	//bool operator!=(const BSTree& obj) const;
 
 	//This is the default destructor which calls make empty to clean up the tree
+	//Preconditons: tree has been intialized
+	//Postconditions: calls deletetree method to clean up the tree's memory
 	virtual ~ BSTree(void);
 
 	//Output method retrives all node pointer to the tree
@@ -140,16 +157,7 @@ private:
 	//Postcondition: Determines with TreeData obj is on the left side and returns a pointer to a TreeData obj
    TreeData *findAndDeleteSmallest(Node *&root);
 
-   	//Helper method for the output method 
-	//Precondition: must pass in a ostream and node pointer
-	//Postcondition: Sets the ostream to take in the data of each Node on the tree
-	ostream& outputHelper(ostream &output, Node *root);
-	
-	//Helper method for the overloaded operator 
-	//Precondition: must pass in an ostream
-	//Postcondition: Calls the outputHelper method passing in the root node
-	ostream& Output(ostream &output);
 
-	friend ostream& operator<<(ostream &os, BSTree &obj);
+	
 
 };

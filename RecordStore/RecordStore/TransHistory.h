@@ -17,6 +17,9 @@ public:
 	//Postconditions: will call the driver class function that performs this operation
 	virtual void executeTransaction(string input, Driver *);
 
+	//print function used to print out transaction data
+	//Preconditions: none
+	//Postconditions: asks user to print from driver class at this time
 	virtual void print() const;
 
 	//virtual destructor is used to clean up TransHistory objects

@@ -7,13 +7,20 @@
 #include "DVD.h"
 #include "ClassicalCD.h"
 #include "BSTree.h"
+#include "Hash.h"
 class Inventory
 {
 
 public:
 	
-	//default constructor and destructor is sufficant given how inventory deals with items
+	//default constructor intializes both arrays and creates dummy objects for Disk objects
+	//Preconditions: none
+	//Postconditions: creates a inventory object
 	Inventory(void);
+
+	//virtual destructor used just in case inventory can be expanded upon; cleans up any inventory objects
+	//Preconditions: none
+	//Postconditions: cleans up items stored in InventoryItems and TreeCollection
 	virtual ~Inventory(void);
 
 	//tradeIn removes an item from the BST of its object
@@ -21,13 +28,18 @@ public:
 	//in addition only a char and string can be passed in as a const
 	//Postconditions: tradeIn will attempt to retreive the item from the BST, if it is found it will 
 	//then process its removal
-	bool tradeIn(char Itype, string line) const;
+	bool tradeIn(char Itype, string line);
 
 	//purchase inserts an item into inventory (proper BST)
 	//Preconditions: file must be formatted correctly, only char and string can be passed in as a const
 	//Postconditions: purchase will call the object to create itself, the pointer will be stored in the proper BST 
 	//it will return a bool if the insert was sucessful or not
-	bool purchase(char Itype, string line) const;
+	bool purchase(char Itype, string line);
+
+	//createInventory is used for loading the inventory file; it allows for the counter to be updated rather than processing x number of items
+	//Preconditions: file has been formatted properly
+	//Postconditions: createInventory will create object as well as update the counter in the BSTree Class
+	bool createInventory(int numOfItems, string input, char type);
 
 	//printCurrentInventory works with the command inventory and prints out the current items in inventory
 	//Preconditions: none
@@ -39,10 +51,10 @@ public:
 
 private:
 
-	//getHashValue converts a char into a hash index for the either array/ hash table
-	//Preconditions: only a char can be passed in
-	//Postconditions: will return an int index from the char passed in
-	int getHashValue(char dtype) const;
+	//isValidItem checks to see if the item is in the dummy table created
+	//Preconditions: a valid hash value is passed
+	//Postconditions: returns true or false depending on if the object exists
+	bool isValidItem(int hashValue);
 
 	//MAX_ITEMS is a static const variable to indicate the size of the two arrays
 	static const int MAX_ITEMS = 26;
@@ -52,6 +64,9 @@ private:
 
 	//A BST is stored for each item in inventory in this array
 	BSTree* TreeCollection[MAX_ITEMS];
+
+	//A pointer to Hash is needed to check the Hash value of a given input
+	Hash *h;
 
 	
 };
