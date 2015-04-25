@@ -1,0 +1,19 @@
+5
+Olson's office
+Classroom
+STEM office
+The Commons
+Another Random Place
+1 2 10
+1 2 5
+3 5 7
+2 4 10
+2 1 15
+3 1  5
+4 1 1
+2 5 4
+3 4 20
+1 5 343
+5 1 321
+1 1 26
+0 0  0
